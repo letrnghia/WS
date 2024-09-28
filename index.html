@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Tabs with Sub-Labs</title>
+    <style>
+        /* CSS để định dạng các tab */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            background-color: #333;
+            padding: 10px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            display: inline-block;
+            cursor: pointer;
+        }
+        nav a:hover {
+            background-color: #575757;
+        }
+        .content {
+            padding: 20px;
+        }
+        .tab-content, .sub-tab-content {
+            display: none;
+        }
+        .tab-content.active, .sub-tab-content.active {
+            display: block;
+        }
+        .sub-tabs {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+        .sub-tabs a {
+            padding: 10px;
+            color: #333;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .sub-tabs a:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Menu điều hướng chính -->
+    <nav>
+        <a href="#" class="tab-link" data-tab="home">Home</a>
+        <a href="#" class="tab-link" data-tab="about">About</a>
+        <a href="#" class="tab-link" data-tab="lab">Lab</a>
+    </nav>
+
+    <!-- Nội dung các tab -->
+    <div class="content">
+        <!-- Tab Home -->
+        <div id="home" class="tab-content active">
+            <h1>Home</h1>
+            <p>This is the Home tab content.</p>
+        </div>
+
+        <!-- Tab About -->
+        <div id="about" class="tab-content">
+            <h1>About</h1>
+            <p>This is the About tab content.</p>
+        </div>
+
+        <!-- Tab Lab với 3 Lab nhỏ -->
+        <div id="lab" class="tab-content">
+            <h1>Lab</h1>
+            <p>Select a Lab below:</p>
+            
+            <!-- Sub-tabs cho Lab 1, Lab 2, Lab 3 -->
+            <div class="sub-tabs">
+                <a href="#" class="tab1.html" data-subtab="lab1">Lab 1</a>
+                <a href="#" class="sub-tab-link" data-subtab="lab2">Lab 2</a>
+                <a href="#" class="sub-tab-link" data-subtab="lab3">Lab 3</a>
+            </div>
+
+            <!-- Nội dung Lab 1, Lab 2, Lab 3 -->
+            <div id="lab1" class="sub-tab-content active">
+                <h2>Lab 1</h2>
+                <p>This is the content for Lab 1.</p>
+            </div>
+            <div id="lab2" class="sub-tab-content">
+                <h2>Lab 2</h2>
+                <p>This is the content for Lab 2.</p>
+            </div>
+            <div id="lab3" class="sub-tab-content">
+                <h2>Lab 3</h2>
+                <p>This is the content for Lab 3.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript để điều khiển các tab lớn
+        const tabs = document.querySelectorAll('.tab-link');
+        const contents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function(event) {
+                event.preventDefault();
+                
+                // Xóa lớp 'active' khỏi tất cả nội dung tab lớn
+                contents.forEach(content => content.classList.remove('active'));
+                
+                // Xóa lớp 'active' khỏi tất cả các tab lớn
+                tabs.forEach(tab => tab.classList.remove('active'));
+                
+                // Thêm lớp 'active' vào tab và nội dung tương ứng
+                document.getElementById(this.dataset.tab).classList.add('active');
+                this.classList.add('active');
+            });
+        });
+
+        // JavaScript để điều khiển các sub-tabs trong Lab
+        const subTabs = document.querySelectorAll('.sub-tab-link');
+        const subContents = document.querySelectorAll('.sub-tab-content');
+
+        subTabs.forEach(subTab => {
+            subTab.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                // Xóa lớp 'active' khỏi tất cả nội dung Lab nhỏ
+                subContents.forEach(content => content.classList.remove('active'));
+
+                // Xóa lớp 'active' khỏi tất cả các sub-tabs
+                subTabs.forEach(subTab => subTab.classList.remove('active'));
+
+                // Thêm lớp 'active' vào sub-tab và nội dung tương ứng
+                document.getElementById(this.dataset.subtab).classList.add('active');
+                this.classList.add('active');
+            });
+        });
+    </script>
+
+</body>
+</html>
